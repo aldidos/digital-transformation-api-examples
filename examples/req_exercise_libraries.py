@@ -1,15 +1,23 @@
+'''
+====================================================================================
+API : /exercise_libraries
+    Methods : 
+        GET : 
+            status code : 
+                200 : OK
+====================================================================================
+'''
+
 import sys
 sys.path.append('.')
 
 from base_uri import BaseAPI
 
-class ExerciseLibraryAPI(BaseAPI) : 
-
-    def __init__(self, uri) : 
-        super().__init__(uri)
-
-if __name__ == '__main__' : 
+def main() : 
     uri = f'/exercise_libraries' 
-    api = ExerciseLibraryAPI(uri)
+    api = BaseAPI(uri)
 
     api.get()
+
+if __name__ == '__main__' : 
+    main()

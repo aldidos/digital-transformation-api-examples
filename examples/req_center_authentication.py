@@ -1,24 +1,37 @@
+'''
+====================================================================================
+API : /center_authentication
+    Methods : 
+        PUT : 
+            status code: 
+                201 : OK
+                400 : Bad Request
+        GET : 
+            status code : 
+                200 : OK
+                404 : Not Found
+====================================================================================
+'''
+
 import sys
 sys.path.append('.')
 
 from base_uri import BaseAPI, headers, data_to_json
 import requests
 
-class CenterAuthenticationAPI(BaseAPI) : 
-
-    def __init__(self, uri) : 
-        super().__init__(uri)
+class CenterAuthAPI(BaseAPI) : 
 
     def get(self, data) : 
         data = data_to_json(data)
-        res = requests.get(self.uri, data = data, headers = headers)
+        res = requests.get(self.uri, data = data, headers=headers)
         self.print_response('GET', res)
-        return res
+
+user_id = 1
 
 put_data = {
     'center_name' : 'test_center_1', 
     'center_address' : 'test_center_address_1dshjkdsa',
-    'user_id' : '1'       
+    'user_id' : user_id
 }
 
 get_data = {
@@ -26,10 +39,13 @@ get_data = {
     'center_id' : 1
 }
 
-if __name__ == '__main__' : 
+def main() : 
     uri = f'/center_authentication' 
-    api = CenterAuthenticationAPI(uri)
+    api = CenterAuthAPI(uri)
 
-    # api.put(put_data)
+    api.put(put_data)
 
     api.get(get_data)
+
+if __name__ == '__main__' : 
+    main()

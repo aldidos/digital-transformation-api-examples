@@ -1,7 +1,21 @@
+'''
+====================================================================================
+API : /qr_certification
+    Methods : 
+        PUT : 
+            status code: 
+                200 : OK
+                400 : Bad Request
+        GET : 
+            status code : 
+                200 : OK
+                404 : Not Found
+====================================================================================
+'''
 import sys
 sys.path.append('.')
 
-from examples.config import base_url, headers
+from config import base_url, headers
 import requests
 import json
 from base_uri import BaseAPI

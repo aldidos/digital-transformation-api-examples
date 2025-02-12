@@ -1,20 +1,29 @@
+'''
+====================================================================================
+API : /users/<user_id>/workout_sessions/recent
+    Path params : 
+        user_id : User 데이터의 고유키
+    Methods : 
+        GET : 
+            status code : 
+                200 : OK
+                404 : Not Found
+====================================================================================
+'''
+
 import sys
 sys.path.append('.')
 
-from examples.base_uri import BaseAPI, headers, data_to_json
+from base_uri import BaseAPI
 import requests
 
-class UserWorkoutSessionsRecentAPI(BaseAPI) : 
-
-    def __init__(self, uri) : 
-        super().__init__(uri)  
-
 user_id = 1
-if __name__ == '__main__' : 
+
+def main() : 
     uri = f'/users/{user_id}/workout_sessions/recent' 
-    api = UserWorkoutSessionsRecentAPI(uri)
+    api = BaseAPI(uri)
 
     api.get()
 
-
-  
+if __name__ == '__main__' : 
+    main()

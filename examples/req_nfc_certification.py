@@ -1,7 +1,22 @@
+'''
+====================================================================================
+API : /nfc_certification
+    Methods : 
+        PUT : 
+            status code: 
+                200 : OK
+                400 : Bad Request
+        GET : 
+            status code : 
+                200 : OK
+                404 : Not Found
+====================================================================================
+'''
+
 import sys
 sys.path.append('.')
 
-from examples.config import base_url, headers
+from base_uri import BaseAPI
 import requests
 import json
 from base_uri import BaseAPI
@@ -19,18 +34,18 @@ class NFCCertificationAPI(BaseAPI) :
         with open('./temp_session_id.json', 'r', encoding='utf-8') as f : 
             return json.load(f)
 
-    def post(self, data) : 
-        res = super().post(data)        
+    def put(self, data) : 
+        res = super().put(data)        
         session_id = res.cookies.get('session')
         self.save_session_id(session_id)
 
-    def get(self, data) : 
+    def get(self) : 
         session_info = self.load_session_id()
 
         cookie = {
             'session' : session_info['session']
         }
-        res = requests.get(self.uri, data = data, headers = headers, cookies=cookie)
+        res = requests.get(self.uri, headers = headers, cookies=cookie)
         self.print_response('GET', res)        
 
 data = {
@@ -44,6 +59,6 @@ if __name__ == '__main__' :
     uri = f'/nfc_certification' 
     uri_api = NFCCertificationAPI(uri)
 
-    uri_api.post(data)
+    uri_api.put(data)
 
-    uri_api.get(data)
+    uri_api.get()

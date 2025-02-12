@@ -1,4 +1,4 @@
-from examples.config import headers, base_url, json, data_to_json
+from config import headers, base_url, json, data_to_json
 import requests
 
 class BaseAPI : 

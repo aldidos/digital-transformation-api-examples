@@ -1,8 +1,25 @@
+'''
+====================================================================================
+API : /users/<user_id>/workout_sessions/<workout_session_id>/workouts
+    Path params : 
+        user_id : User 고유키
+        workout_session_id : WorkoutSession 고유키
+    Methods : 
+        POST : 
+            status code: 
+                201 : OK
+        GET : 
+            status code : 
+                200 : OK
+                404 : Not Found
+====================================================================================
+'''
 import sys
 sys.path.append('.')
 
-from examples.base_uri import BaseAPI, headers, data_to_json
+from base_uri import BaseAPI
 import requests
+from datetime import datetime, timedelta
 
 def create_workout(exercise_library, completed_sets, start_time, end_time) : 
     return {
@@ -57,11 +74,26 @@ def create_workout_metric(rep, peak_velocity_con, mean_velocity_con, peak_power_
     }
 
 def create_dumydata() : 
+
+    cur_datetime = datetime.now()
+    workout_start_time = cur_datetime     
+
+    set1_work_start_time = workout_start_time
+    set1_work_end_time = workout_start_time + timedelta(minutes = 14)    
+
+    set1_rest_start_time = set1_work_end_time
+    set1_rest_end_time = set1_rest_start_time + timedelta(minutes = 1)   
+
+    set2_work_start_time = set1_rest_end_time
+    set2_work_end_time = set2_work_start_time + timedelta(minutes = 15)
+
+    wokrout_end_time = set2_work_end_time
+
     return {
-        'workout' : create_workout(1, 2, '2025-02-11 15:30:00', '2025-02-11 15:45:00'),
+        'workout' : create_workout(1, 2, workout_start_time.isoformat(), wokrout_end_time.isoformat() ),
         'workout_sets' : [
             {
-                'workout_set' : create_workout_set(1, 70, 5, '2025-02-11 15:30:00', '2025-02-11 15:34:00', '2025-02-11 15:34:00', '2025-02-11 15:35:00'),
+                'workout_set' : create_workout_set(1, 70, 5, set1_work_start_time.isoformat(), set1_work_end_time.isoformat(), set1_rest_start_time.isoformat(), set1_rest_end_time.isoformat()),
                 'workout_metrics' : [
                     create_workout_metric(1, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.5, 0.9, 0.9),
                     create_workout_metric(2, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.5, 0.9, 0.9),
@@ -71,7 +103,7 @@ def create_dumydata() :
                 ]
             },
             {
-                'workout_set' : create_workout_set(2, 90, 5, '2025-02-11 15:36:00', '2025-02-11 15:42:00', None, None),
+                'workout_set' : create_workout_set(2, 90, 5, set2_work_start_time.isoformat(), set2_work_end_time.isoformat(), None, None),
                 'workout_metrics' : [
                     create_workout_metric(1, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.5, 0.9, 0.9),
                     create_workout_metric(2, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.1, 0.1, 0.1, 0.1, 0.5, 0.9, 0.9),
@@ -83,21 +115,20 @@ def create_dumydata() :
         ]
     }
 
-
-class WorkoutSessionWorkouts(BaseAPI) : 
-
-    def __init__(self, uri) : 
-        super().__init__(uri)
-
 data = create_dumydata()
-
 user_id = 1
 workout_session_id = 1
-if __name__ == '__main__' : 
+
+def main() : 
     uri = f'/users/{user_id}/workout_sessions/{workout_session_id}/workouts' 
-    api = WorkoutSessionWorkouts(uri)
+    api = BaseAPI(uri)
 
     api.post(data)
+
+    api.get()
+
+if __name__ == '__main__' : 
+    main()
 
 
   

@@ -1,15 +1,18 @@
+'''
+====================================================================================
+API : /signup 
+    Methods : 
+        POST : 
+            status code: 
+                201 : OK
+                400 : Bad Request        
+====================================================================================
+'''
+
 import sys
 sys.path.append('.')
 
-from examples.config import base_url, headers
-import requests
-import json
 from base_uri import BaseAPI
-
-class SignupAPI(BaseAPI) : 
-
-    def __init__(self, uri) : 
-        super().__init__(uri)
 
 user_account = {
     'login_id' : 'tester_id', 
@@ -30,8 +33,11 @@ data = {
     'user_info' : user_info
 }
 
-if __name__ == '__main__' : 
+def main() : 
     uri = f'/signup' 
-    api = SignupAPI(uri)
+    api = BaseAPI(uri)
 
     api.post(data)
+
+if __name__ == '__main__' : 
+    main()

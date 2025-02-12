@@ -1,7 +1,17 @@
+'''
+====================================================================================
+API : /end_wokrout_session
+    Methods : 
+        PUT : 
+            status code: 
+                200 : OK      
+====================================================================================
+'''
+
 import sys
 sys.path.append('.')
 
-from examples.config import base_url, headers
+from config import base_url, headers
 import requests
 import json
 from base_uri import BaseAPI
