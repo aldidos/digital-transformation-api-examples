@@ -16,7 +16,7 @@ API : /nfc_certification
 import sys
 sys.path.append('.')
 
-from base_uri import BaseAPI
+from config import base_url, headers
 import requests
 import json
 from base_uri import BaseAPI

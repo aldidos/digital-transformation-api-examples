@@ -1,8 +1,9 @@
 '''
 ====================================================================================
-API : /users/<user_id>/workout_sessions/recent
+API : /users/<user_id>/workout_sessions/<workout_session_id>/report
     Path params : 
-        user_id : User 데이터의 고유키
+        user_id : User의 고유키
+        workout_session_id : WorkoutSession 고유키
     Methods : 
         GET : 
             status code : 
@@ -15,12 +16,13 @@ import sys
 sys.path.append('.')
 
 from base_uri import BaseAPI
-import requests
 
 user_id = 1
+workout_session_id = 1
+workout_id = 1
 
-def main() : 
-    uri = f'/users/{user_id}/workout_sessions/recent' 
+def main() :     
+    uri = f'/users/<{user_id}>/workout_sessions/{workout_session_id}/report'
     api = BaseAPI(uri)
 
     api.get()
